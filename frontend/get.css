@@ -1,0 +1,148 @@
+/* Core Layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #f3f0ff 0%, #e0d4fc 100%);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* NAVBAR */
+.navbar {
+    background-color: #1E1B4B; /* Dark Blue from your screenshot */
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 50px;
+}
+
+.logo {
+    font-style: italic;
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+.nav-links a:hover {
+    color: #e91e63;
+}
+
+/* MIDDLE CONTAINER */
+.page-wrapper {
+    flex: 1; /* Pushes footer down */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.container {
+    background: white;
+    width: 100%;
+    max-width: 900px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+}
+
+h1 { text-align: center; color: #333; margin-bottom: 30px; }
+h3 { color: #e91e63; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; margin-bottom: 10px; }
+
+/* Form Columns */
+.main-form {
+    display: flex;
+    gap: 40px;
+}
+
+.form-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Inputs */
+label {
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 10px;
+    color: #555;
+}
+
+input {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+}
+
+/* Service Item Rows */
+.item-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.desc { flex: 2; }
+.amt { flex: 1; }
+
+.add-btn {
+    background: #607d8b;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* The Pink Button */
+.generate-btn {
+    background-color: #e91e63;
+    color: white;
+    width: 100%;
+    padding: 18px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 50px;
+}
+
+.generate-btn:hover { background-color: #c2185b; }
+
+/* FOOTER */
+.footer {
+    background-color: #333;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 20px;
+    height: 70px;
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+    .main-form { flex-direction: column; }
+    .navbar { padding: 0 10px; }
+}
