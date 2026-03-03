@@ -16,6 +16,7 @@ const quotationSchema = new mongoose.Schema({
   subtotal: Number,
   gst: Number,
   totalAmount: Number,
+  applyGst: { type: Boolean, default: false },
   createdAt: {
     type: Date,
     default: Date.now

@@ -3,26 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="get.css    ">
-</head>
-<body>
-   <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuoteFlow - Get Quotation</title>
+    <title>QuoteFlow - Create Your Quotation</title>
     <link rel="stylesheet" href="get.css">
+    <style>
+        /* ── Extra styles for service checkboxes & totals ── */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+        }
+        .service-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #fff;
+            position: relative;
+        }
+        .service-card:hover {
+            border-color: #7c3aed;
+            box-shadow: 0 4px 15px rgba(124,58,237,0.12);
+        }
+        .service-card.selected {
+            border-color: #7c3aed;
+            background: #f5f3ff;
+        }
+        .service-card input[type="checkbox"] {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 18px;
+            height: 18px;
+            accent-color: #7c3aed;
+            cursor: pointer;
+        }
+        .service-card .svc-name {
+            font-weight: 700;
+            color: #1a1a2e;
+            font-size: 14px;
+            margin-bottom: 4px;
+            padding-right: 24px;
+        }
+        .service-card .svc-desc {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        .service-card .svc-price {
+            font-size: 16px;
+            font-weight: 800;
+            color: #7c3aed;
+        }
+        .service-card .svc-cat {
+            font-size: 10px;
+            background: #ede9fe;
+            color: #7c3aed;
+            border-radius: 20px;
+            padding: 2px 8px;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+        .totals-box {
+            background: #1a1a2e;
+            color: #fff;
+            border-radius: 14px;
+            padding: 22px 28px;
+            margin-top: 24px;
+        }
+        .totals-box .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #d1d5db;
+        }
+        .totals-box .row.total {
+            border-top: 1px solid #374151;
+            padding-top: 12px;
+            margin-top: 12px;
+            font-size: 18px;
+            font-weight: 800;
+            color: #a78bfa;
+        }
+        .gst-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 18px;
+            font-size: 14px;
+            color: #374151;
+        }
+        .gst-toggle input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #7c3aed;
+            cursor: pointer;
+        }
+        .loading-services {
+            text-align: center;
+            padding: 40px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        #submitBtn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #7c3aed, #4f46e5);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: opacity 0.2s;
+        }
+        #submitBtn:hover { opacity: 0.9; }
+        #submitBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .error-msg { color: #dc2626; font-size: 13px; margin-top: 6px; }
+    </style>
 </head>
 <body>
-
     <nav class="navbar">
         <div class="logo">QuoteFlow</div>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="#">GetQuote</a></li>
-            <li><a href="admin.html">Admin</a></li> 
+            <li><a href="get.html" class="active">GetQuote</a></li>
+            <li><a href="admin.html">Admin</a></li>
             <li><a href="sign.html">Sign In</a></li>
         </ul>
     </nav>
@@ -30,58 +139,67 @@
     <div class="page-wrapper">
         <div class="container">
             <h1>Create Your Quotation</h1>
-            
-            <form class="main-form" id="quotationForm">
->
-                <div class="form-section">
-                    <h3>Your Information</h3>
-                    <label>Full name</label> <input type="text" placeholder="Enter name">
-                    <label>Email</label> <input type="text" placeholder="Enter email">
-                    <label>Phone</label> <input type="text" placeholder="Enter phone">
-                    <label>Address</label> <input type="text" placeholder="Enter address">
-                    <label>City</label> <input type="text" placeholder="Enter city">
-                    <label>State</label> <input type="text" placeholder="Enter state">
-                    <label>Zip</label> <input type="text" placeholder="Enter zip">
-                    <label>Country</label> <input type="text" placeholder="Enter country">
-                    <label>Company</label> <input type="text" placeholder="Enter company">
-                    <label>Website</label> <input type="text" placeholder="Enter website">
-                    <label>Logo URL</label> <input type="text" placeholder="Enter logo link">
-                </div>
+            <p style="color:#6b7280;margin-bottom:32px;">Fill in your details, select services, and download your professional quotation in seconds.</p>
 
+            <form id="quotationForm">
+
+                <!-- SECTION 1: Your Information -->
                 <div class="form-section">
-                    <h3>Service Details</h3>
-                    <div id="item-list">
-                        <div class="item-row">
-                            <input type="text" placeholder="Service Description" class="desc">
-                            <input type="number" placeholder="0.00" class="amt">
+                    <h3>📋 Your Information</h3>
+                    <div class="form-grid">
+                        <div class="field-group">
+                            <label for="fullName">Full Name <span class="req">*</span></label>
+                            <input type="text" id="fullName" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="field-group">
+                            <label for="email">Email Address <span class="req">*</span></label>
+                            <input type="email" id="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="field-group">
+                            <label for="phone">Phone Number <span class="req">*</span></label>
+                            <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="field-group">
+                            <label for="companyName">Company Name <span style="color:#9ca3af;">(optional)</span></label>
+                            <input type="text" id="companyName" placeholder="Enter company name">
                         </div>
                     </div>
-                    <button type="button" class="add-btn" onclick="addItem()">+ Add More Items</button>
-                    
-                    <div class="action-area">
-                        <button type="submit" class="generate-btn">Generate Quotation</button>
+                </div>
+
+                <!-- SECTION 2: Select Services -->
+                <div class="form-section">
+                    <h3>🛠️ Select Services</h3>
+                    <p style="font-size:13px;color:#6b7280;margin-bottom:4px;">Click on a service to select it. Multiple selections allowed.</p>
+                    <div id="services-container">
+                        <div class="loading-services">⏳ Loading services...</div>
                     </div>
                 </div>
+
+                <!-- SECTION 3: GST & Totals -->
+                <div class="form-section">
+                    <h3>💰 Price Summary</h3>
+                    <div class="gst-toggle">
+                        <input type="checkbox" id="applyGst">
+                        <label for="applyGst" style="cursor:pointer;">Apply GST (18%)</label>
+                    </div>
+                    <div class="totals-box">
+                        <div class="row"><span>Subtotal</span><span id="subtotalDisplay">₹0</span></div>
+                        <div class="row" id="gstRow" style="display:none;"><span>GST (18%)</span><span id="gstDisplay">₹0</span></div>
+                        <div class="row total"><span>Total Amount</span><span id="totalDisplay">₹0</span></div>
+                    </div>
+                    <div id="errorMsg" class="error-msg" style="display:none;"></div>
+
+                    <button type="submit" id="submitBtn">🚀 Generate Quotation</button>
+                </div>
+
             </form>
         </div>
     </div>
 
     <footer class="footer">
-        <p>&copy; 2026 QuotationApp. All rights reserved.</p>
+        <p>© 2026 QuoteFlow. All rights reserved.</p>
     </footer>
 
-    <script>
-        function addItem() {
-            const div = document.createElement('div');
-            div.className = 'item-row';
-            div.innerHTML = '<input type="text" placeholder="Service Description" class="desc"> <input type="number" placeholder="0.00" class="amt">';
-            document.getElementById('item-list').appendChild(div);
-        }
-    </script>
-</body>
-</html>
-<script src="script.js">
-</script>
-
+    <script src="get.js"></script>
 </body>
 </html>
