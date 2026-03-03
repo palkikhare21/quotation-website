@@ -20,7 +20,8 @@ app.use(express.static(path.join(__dirname, "frontend")));
 /* ===============================
    ✅ MONGODB CONNECTION
 ================================= */
-mongoose.connect("mongodb://127.0.0.1:27017/quotationDB")
+const MONGO_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/quotationDB";
+mongoose.connect(MONGO_URI)
   .then(() => console.log("MongoDB Connected ✅"))
   .catch((err) => console.log("MongoDB Error:", err));
 
