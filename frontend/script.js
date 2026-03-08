@@ -2,12 +2,12 @@ function addItem() {
     const div = document.createElement('div');
     div.className = 'item-row';
     div.innerHTML =
-      '<input type="text" placeholder="Service Description" class="desc"> \
+        '<input type="text" placeholder="Service Description" class="desc"> \
        <input type="number" placeholder="0.00" class="amt">';
     document.getElementById('item-list').appendChild(div);
 }
 
-document.querySelector("form").addEventListener("submit", async function(e) {
+document.querySelector("form").addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const descs = document.querySelectorAll(".desc");
@@ -45,7 +45,7 @@ document.querySelector("form").addEventListener("submit", async function(e) {
         totalAmount
     };
 
-    const response = await fetch("http://localhost:5000/create-quotation", {
+    const response = await fetch("/create-quotation", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -56,6 +56,6 @@ document.querySelector("form").addEventListener("submit", async function(e) {
     const result = await response.json();
 
     if (result.quotationId) {
-        window.location.href = `http://localhost:5000/quotation/${result.quotationId}/pdf`;
+        window.location.href = `/quotation/${result.quotationId}/pdf`;
     }
 });
